@@ -62,16 +62,11 @@ app.use(compression());
 // STATIC FILES SERVING
 // ===================================
 
-// Serve static files with proper caching
+// Serve static files — no caching in dev, 1d in production
+const isDev = process.env.NODE_ENV !== 'production';
 app.use(express.static(path.join(__dirname, 'public'), {
-    maxAge: '1d',
-    etag: true
-}));
-
-// HTML files - no caching (always get latest)
-app.use(express.static(path.join(__dirname, 'public'), {
-    maxAge: 0,
-    etag: false
+    maxAge: isDev ? 0 : '1d',
+    etag: !isDev,
 }));
 
 // ===================================

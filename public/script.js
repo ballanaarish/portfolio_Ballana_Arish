@@ -189,6 +189,219 @@ if (window.performance && window.performance.timing) {
 }
 
 // ===================================
+// HERO — Knowledge Graph Background
+// ===================================
+
+(function () {
+    const canvas = document.getElementById('kg-canvas');
+    if (!canvas || prefersReducedMotion) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, raf;
+
+    const TAGS = [
+        { label: 'AWS',             cat: 'tech' },
+        { label: 'Java',            cat: 'tech' },
+        { label: 'Microservices',   cat: 'tech' },
+        { label: 'Spring Boot',     cat: 'tech' },
+        { label: 'IoT',             cat: 'tech' },
+        { label: 'MBA',             cat: 'biz'  },
+        { label: 'Analytics',       cat: 'biz'  },
+        { label: 'Leadership',      cat: 'biz'  },
+        { label: 'SaaS',            cat: 'biz'  },
+        { label: 'Fraud Detection', cat: 'biz'  },
+        { label: 'Cloud',           cat: 'tech' },
+        { label: 'Strategy',        cat: 'biz'  },
+    ];
+
+    const EDGES = [
+        [0,2],[1,2],[2,10],[3,2],[4,0],
+        [5,7],[6,7],[7,11],[8,5],[9,6],
+        [2,6],[1,5],[0,8],[3,9],[10,11],
+    ];
+
+    let nodes = [];
+
+    function initNodes() {
+        nodes = TAGS.map((t, i) => ({
+            ...t,
+            x: 80 + Math.random() * (W - 160),
+            y: 60 + Math.random() * (H - 120),
+            vx: (Math.random() - 0.5) * 0.18,
+            vy: (Math.random() - 0.5) * 0.18,
+            phase: Math.random() * Math.PI * 2,
+        }));
+    }
+
+    function resize() {
+        W = canvas.offsetWidth;
+        H = canvas.offsetHeight;
+        canvas.width  = W * devicePixelRatio;
+        canvas.height = H * devicePixelRatio;
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+        initNodes();
+    }
+
+    let tick = 0;
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+        tick++;
+
+        // gentle drift
+        nodes.forEach((n, i) => {
+            n.x += n.vx + Math.sin(tick * 0.008 + n.phase) * 0.08;
+            n.y += n.vy + Math.cos(tick * 0.007 + n.phase) * 0.08;
+            if (n.x < 60)     { n.x = 60;     n.vx *= -1; }
+            if (n.x > W - 60) { n.x = W - 60; n.vx *= -1; }
+            if (n.y < 40)     { n.y = 40;     n.vy *= -1; }
+            if (n.y > H - 40) { n.y = H - 40; n.vy *= -1; }
+        });
+
+        // edges
+        EDGES.forEach(([a, b]) => {
+            const na = nodes[a], nb = nodes[b];
+            if (!na || !nb) return;
+            const dist = Math.hypot(na.x - nb.x, na.y - nb.y);
+            const alpha = Math.max(0, 0.14 - dist / 1800);
+            ctx.beginPath();
+            ctx.moveTo(na.x, na.y);
+            ctx.lineTo(nb.x, nb.y);
+            ctx.strokeStyle = `rgba(8,145,178,${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+        });
+
+        // nodes + labels
+        ctx.textAlign = 'center';
+        nodes.forEach(n => {
+            const isTech = n.cat === 'tech';
+            const cr = isTech ? [8,145,178] : [15,23,42];
+
+            // dot
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${cr.join(',')},0.5)`;
+            ctx.fill();
+
+            // label
+            ctx.font = '500 11px system-ui, sans-serif';
+            ctx.fillStyle = `rgba(${cr.join(',')},0.55)`;
+            ctx.fillText(n.label, n.x, n.y - 9);
+        });
+
+        raf = requestAnimationFrame(draw);
+    }
+
+    function start() {
+        resize();
+        draw();
+    }
+
+    window.addEventListener('resize', () => {
+        cancelAnimationFrame(raf);
+        resize();
+        draw();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
+        else if (!raf) draw();
+    });
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+    else start();
+})();
+
+// ===================================
+// PAGE BACKGROUND — Node Network
+// ===================================
+
+(function () {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas || prefersReducedMotion) return;
+    const ctx = canvas.getContext('2d');
+    const ACCENT  = { r: 8,  g: 145, b: 178 };
+    const PRIMARY = { r: 15, g: 23,  b: 42  };
+    let nodes = [], raf, W, H;
+
+    function resize() {
+        W = canvas.offsetWidth;
+        H = canvas.offsetHeight;
+        canvas.width  = W * devicePixelRatio;
+        canvas.height = H * devicePixelRatio;
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+        initNodes();
+    }
+
+    function initNodes() {
+        const count = Math.min(Math.floor((W * H) / 14000), 60);
+        nodes = Array.from({ length: count }, () => ({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: Math.random() * 2 + 1.5,
+            type: Math.random() > 0.6 ? 'accent' : 'primary',
+        }));
+    }
+
+    const MAX_DIST_SQ = 160 * 160;
+
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        // grid
+        ctx.strokeStyle = 'rgba(8,145,178,0.04)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < W; x += 60) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+        for (let y = 0; y < H; y += 60) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+        for (const n of nodes) {
+            n.x += n.vx; n.y += n.vy;
+            if (n.x < -20) n.x = W + 20;
+            if (n.x > W + 20) n.x = -20;
+            if (n.y < -20) n.y = H + 20;
+            if (n.y > H + 20) n.y = -20;
+        }
+
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const a = nodes[i], b = nodes[j];
+                const dx = a.x - b.x, dy = a.y - b.y;
+                const dSq = dx*dx + dy*dy;
+                if (dSq > MAX_DIST_SQ) continue;
+                const t = 1 - dSq / MAX_DIST_SQ;
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(8,145,178,${t * 0.18})`;
+                ctx.lineWidth = t * 1.2;
+                ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+                ctx.stroke();
+            }
+        }
+
+        for (const n of nodes) {
+            const c = n.type === 'accent' ? ACCENT : PRIMARY;
+            ctx.beginPath(); ctx.arc(n.x, n.y, n.r + 3, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${c.r},${c.g},${c.b},0.06)`; ctx.fill();
+            ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${c.r},${c.g},${c.b},0.55)`; ctx.fill();
+        }
+
+        raf = requestAnimationFrame(draw);
+    }
+
+    function start() { resize(); draw(); }
+
+    window.addEventListener('resize', () => { cancelAnimationFrame(raf); resize(); draw(); });
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
+        else if (!raf) draw();
+    });
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+    else start();
+})();
+
+// ===================================
 // INITIALIZATION
 // ===================================
 
