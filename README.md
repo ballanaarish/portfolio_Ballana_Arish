@@ -15,6 +15,16 @@ npm run dev
 # Visit http://localhost:3000
 ```
 
+## 🛑 Stop the Server
+
+If the server is already running and port 3000 is in use, kill it with:
+
+```bash
+lsof -ti :3000 | xargs kill -9
+```
+
+Then start it again normally with `npm run dev`.
+
 ## 🎨 Design Highlights
 
 ### Modern, Professional Aesthetic
