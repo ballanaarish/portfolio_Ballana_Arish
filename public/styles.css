@@ -276,10 +276,65 @@ a:hover {
 }
 
 .hero .container {
-    display: flex;
-    flex-direction: column;
     position: relative;
     z-index: 1;
+}
+
+.hero-layout {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    align-items: center;
+    gap: 0;
+}
+
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    padding-right: var(--spacing-2xl);
+}
+
+.hero-photo-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    clip-path: polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.hero-photo-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.65) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .hero-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-photo-wrap {
+        position: relative;
+        width: 100%;
+        height: 260px;
+        clip-path: polygon(0% 12%, 100% 0%, 100% 100%, 0% 100%);
+    }
 }
 
 .hero-title {
@@ -478,11 +533,38 @@ a:hover {
 .education-card {
     background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(8px);
-    padding: var(--spacing-xl);
+    padding: 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     transition: all var(--transition-base);
+    overflow: hidden;
 }
+
+.education-img-wrap {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.education-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.education-card:hover .education-img {
+    transform: scale(1.04);
+}
+
+.education-card > *:not(.education-img-wrap) {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+}
+
+.education-card > .degree-type { padding-top: var(--spacing-lg); }
+.education-card > .date        { padding-bottom: var(--spacing-xl); }
 
 .education-card:hover {
     box-shadow: 0 4px 12px var(--color-shadow);
