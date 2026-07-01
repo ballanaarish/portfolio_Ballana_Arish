@@ -484,14 +484,17 @@ a:hover {
 }
 
 .exp-logo {
-    width: 40px;
-    height: 40px;
+    width: 40px !important;
+    height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
     object-fit: contain;
     border-radius: var(--radius-sm);
     background: #fff;
     padding: 4px;
     border: 1px solid var(--color-border);
     flex-shrink: 0;
+    display: block;
 }
 
 .exp-company {
