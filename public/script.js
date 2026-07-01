@@ -199,24 +199,35 @@ if (window.performance && window.performance.timing) {
     let W, H, raf;
 
     const TAGS = [
-        { label: 'AWS',             cat: 'tech' },
-        { label: 'Java',            cat: 'tech' },
-        { label: 'Microservices',   cat: 'tech' },
-        { label: 'Spring Boot',     cat: 'tech' },
-        { label: 'IoT',             cat: 'tech' },
-        { label: 'MBA',             cat: 'biz'  },
-        { label: 'Analytics',       cat: 'biz'  },
-        { label: 'Leadership',      cat: 'biz'  },
-        { label: 'SaaS',            cat: 'biz'  },
-        { label: 'Fraud Detection', cat: 'biz'  },
-        { label: 'Cloud',           cat: 'tech' },
-        { label: 'Strategy',        cat: 'biz'  },
+        { label: 'AWS',                    cat: 'tech' },
+        { label: 'Java',                   cat: 'tech' },
+        { label: 'Microservices',          cat: 'tech' },
+        { label: 'Spring Boot',            cat: 'tech' },
+        { label: 'IoT',                    cat: 'tech' },
+        { label: 'Cloud',                  cat: 'tech' },
+        { label: 'CI/CD',                  cat: 'tech' },
+        { label: 'Distributed Systems',    cat: 'tech' },
+        { label: 'MBA',                    cat: 'biz'  },
+        { label: 'Analytics',              cat: 'biz'  },
+        { label: 'Leadership',             cat: 'biz'  },
+        { label: 'SaaS',                   cat: 'biz'  },
+        { label: 'Fraud Detection',        cat: 'biz'  },
+        { label: 'Strategy',               cat: 'biz'  },
+        { label: 'Payments',               cat: 'biz'  },
+        { label: 'Risk Management',        cat: 'biz'  },
+        { label: 'Agile',                  cat: 'biz'  },
+        { label: 'Compliance',             cat: 'biz'  },
+        { label: 'Mentoring',              cat: 'biz'  },
+        { label: 'Digital Transformation', cat: 'biz'  },
+        { label: 'Stakeholder',            cat: 'biz'  },
+        { label: 'Banking',                cat: 'biz'  },
     ];
 
     const EDGES = [
-        [0,2],[1,2],[2,10],[3,2],[4,0],
-        [5,7],[6,7],[7,11],[8,5],[9,6],
-        [2,6],[1,5],[0,8],[3,9],[10,11],
+        [0,2],[1,2],[2,5],[3,2],[4,0],[6,2],[7,2],
+        [8,10],[9,10],[10,13],[11,8],[12,9],[13,16],
+        [14,12],[15,16],[16,17],[18,10],[19,8],[20,13],[21,14],
+        [0,11],[1,8],[5,19],[6,15],[7,21],
     ];
 
     let nodes = [];
