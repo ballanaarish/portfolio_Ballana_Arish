@@ -415,47 +415,33 @@ if (window.performance && window.performance.timing) {
 // ===================================
 // MOBILE NAV — Hamburger Toggle
 // ===================================
+// NOTE: This runs from the external script.js because the server CSP
+// (scriptSrc 'self') blocks inline <script>. Asset URLs are cache-busted
+// with ?v=N in index.html so Cloudflare/browsers pick up changes.
 
 (function () {
     const btn = document.querySelector('.nav-hamburger');
     const links = document.querySelector('.nav-links');
     if (!btn || !links) return;
 
-    const BREAKPOINT = 640;
-
-    function applyLayout() {
-        if (window.innerWidth <= BREAKPOINT) {
-            btn.style.display = 'flex';
-            if (!links.classList.contains('open')) {
-                links.style.display = 'none';
-            }
-        } else {
-            btn.style.display = 'none';
-            links.style.display = '';
-            links.classList.remove('open');
-            btn.classList.remove('open');
-            btn.setAttribute('aria-expanded', 'false');
-        }
+    function close() {
+        links.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
     }
 
     btn.addEventListener('click', () => {
         const isOpen = links.classList.toggle('open');
         btn.classList.toggle('open', isOpen);
         btn.setAttribute('aria-expanded', isOpen);
-        links.style.display = isOpen ? 'flex' : 'none';
     });
 
-    links.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-            links.classList.remove('open');
-            btn.classList.remove('open');
-            btn.setAttribute('aria-expanded', 'false');
-            links.style.display = 'none';
-        });
-    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
 
-    window.addEventListener('resize', applyLayout);
-    applyLayout();
+    // Close the menu if the viewport grows back to desktop width
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 640) close();
+    });
 })();
 
 // ===================================
