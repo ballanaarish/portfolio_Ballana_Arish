@@ -421,10 +421,28 @@ if (window.performance && window.performance.timing) {
     const links = document.querySelector('.nav-links');
     if (!btn || !links) return;
 
+    const BREAKPOINT = 640;
+
+    function applyLayout() {
+        if (window.innerWidth <= BREAKPOINT) {
+            btn.style.display = 'flex';
+            if (!links.classList.contains('open')) {
+                links.style.display = 'none';
+            }
+        } else {
+            btn.style.display = 'none';
+            links.style.display = '';
+            links.classList.remove('open');
+            btn.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+    }
+
     btn.addEventListener('click', () => {
         const isOpen = links.classList.toggle('open');
         btn.classList.toggle('open', isOpen);
         btn.setAttribute('aria-expanded', isOpen);
+        links.style.display = isOpen ? 'flex' : 'none';
     });
 
     links.querySelectorAll('a').forEach(a => {
@@ -432,8 +450,12 @@ if (window.performance && window.performance.timing) {
             links.classList.remove('open');
             btn.classList.remove('open');
             btn.setAttribute('aria-expanded', 'false');
+            links.style.display = 'none';
         });
     });
+
+    window.addEventListener('resize', applyLayout);
+    applyLayout();
 })();
 
 // ===================================
