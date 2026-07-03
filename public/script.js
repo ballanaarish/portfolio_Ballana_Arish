@@ -413,6 +413,30 @@ if (window.performance && window.performance.timing) {
 })();
 
 // ===================================
+// MOBILE NAV — Hamburger Toggle
+// ===================================
+
+(function () {
+    const btn = document.querySelector('.nav-hamburger');
+    const links = document.querySelector('.nav-links');
+    if (!btn || !links) return;
+
+    btn.addEventListener('click', () => {
+        const isOpen = links.classList.toggle('open');
+        btn.classList.toggle('open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen);
+    });
+
+    links.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            links.classList.remove('open');
+            btn.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+        });
+    });
+})();
+
+// ===================================
 // INITIALIZATION
 // ===================================
 
