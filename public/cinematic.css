@@ -438,6 +438,181 @@ body.cine {
 }
 .cine-inline-link:hover { border-bottom-color: var(--cine-cyan); }
 
+.cine-exp-subhead {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--cine-text);
+    margin-top: 1.5rem;
+    margin-bottom: 0.85rem;
+}
+.cine-exp-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.cine-exp-points li {
+    position: relative;
+    padding-left: 1.25rem;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--cine-muted);
+}
+.cine-exp-points li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cine-cyan);
+}
+.cine-exp-points li strong {
+    color: var(--cine-text);
+    font-weight: 600;
+}
+
+.cine-exp-detail {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2rem;
+    align-items: start;
+    margin-top: 1.5rem;
+}
+.cine-exp-detail .cine-exp-subhead { margin-top: 0; }
+.cine-exp-detail-media img {
+    display: block;
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--cine-line);
+}
+
+@media (max-width: 860px) {
+    .cine-exp-detail { grid-template-columns: 1fr; }
+    .cine-exp-detail-media { max-width: 420px; }
+}
+
+/* Timeline (multi-role cards, e.g. HP) */
+.cine-timeline {
+    list-style: none;
+    margin-top: 1.75rem;
+}
+.cine-tl-item {
+    position: relative;
+    padding-left: 3rem;
+    padding-bottom: 1.75rem;
+}
+.cine-tl-item:last-child { padding-bottom: 0; }
+.cine-tl-item::before {
+    content: "";
+    position: absolute;
+    left: 15px;
+    top: 34px;
+    bottom: 0;
+    width: 2px;
+    background: var(--cine-line);
+}
+.cine-tl-item:last-child::before { display: none; }
+.cine-tl-node {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--cine-cyan);
+    background: rgba(53, 201, 214, 0.08);
+    border: 1px solid rgba(53, 201, 214, 0.5);
+}
+.cine-tl-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cine-text);
+    margin-bottom: 0.4rem;
+}
+.cine-tl-date {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    color: var(--cine-muted);
+    margin-left: 0.5rem;
+    white-space: nowrap;
+}
+.cine-tl-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--cine-muted);
+}
+.cine-tl-body .cine-exp-points { margin-top: 0.85rem; }
+.cine-tl-sub {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--cine-cyan);
+    margin-top: 1.15rem;
+    margin-bottom: 0.25rem;
+}
+.cine-tl-highlight {
+    margin-top: 1rem;
+    padding: 0.85rem 1.1rem;
+    border-left: 2px solid var(--cine-green);
+    background: rgba(56, 224, 138, 0.06);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--cine-muted);
+}
+.cine-tl-highlight span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cine-green);
+    margin-bottom: 0.35rem;
+}
+
+/* Recognition callout (kudos / awards) */
+.cine-recognition {
+    margin-top: 1.75rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid rgba(56, 224, 138, 0.22);
+    border-left: 3px solid var(--cine-green);
+    background: rgba(56, 224, 138, 0.05);
+    border-radius: 0 10px 10px 0;
+}
+.cine-rec-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cine-green);
+    margin-bottom: 0.9rem;
+}
+.cine-rec-quote {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--cine-text);
+    font-style: italic;
+    margin-bottom: 0.9rem;
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--cine-line);
+}
+.cine-rec-attrib {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    color: var(--cine-muted);
+}
+
 /* ---------- Education ---------- */
 .cine-edu-grid {
     display: grid;
