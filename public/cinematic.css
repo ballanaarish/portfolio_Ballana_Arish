@@ -252,6 +252,8 @@ body.cine {
 }
 
 .avatar-video {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -266,6 +268,16 @@ body.cine {
         linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 34%, #000 66%),
         linear-gradient(to bottom, transparent 0%, #000 16%, #000 78%, transparent 100%);
     mask-composite: intersect;
+}
+
+/* Video starts hidden and fades in only once it can actually play, so the
+   avatar dissolves cleanly out of the dark background. */
+.avatar-video {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+.avatar-video.is-ready {
+    opacity: 1;
 }
 
 /* ---------- HUD graphic ---------- */
@@ -488,6 +500,52 @@ body.cine {
     border: 1px solid var(--cine-line);
 }
 
+/* APM "Business Network" dashboard mockup (Cisco) */
+.apm-mock {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--cine-line);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.apm-top { font-size: 0.8rem; font-weight: 600; color: var(--cine-text); }
+.apm-rings { display: flex; justify-content: space-between; gap: 0.35rem; }
+.apm-ring {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 3px solid #38e08a;
+    border-top-color: rgba(56, 224, 138, 0.3);
+}
+.apm-ring.warn {
+    border-color: #f5a623;
+    border-top-color: rgba(245, 166, 35, 0.3);
+}
+.apm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.apm-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--cine-line);
+    border-radius: 8px;
+    padding: 0.5rem 0.6rem;
+}
+.apm-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.3px;
+    color: var(--cine-muted);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+}
+.apm-lbl b { color: var(--cine-text); font-weight: 500; }
+.apm-card svg { width: 100%; height: 26px; display: block; }
+.apm-card svg polyline { fill: none; stroke: var(--cine-cyan); stroke-width: 1.6; }
+.apm-card svg.violet polyline { stroke: #8f7fe0; }
+.apm-card svg rect { fill: var(--cine-cyan); }
+.apm-card svg.violet rect { fill: #8f7fe0; }
+
 @media (max-width: 860px) {
     .cine-exp-detail { grid-template-columns: 1fr; }
     .cine-exp-detail-media { max-width: 420px; }
@@ -612,6 +670,74 @@ body.cine {
     letter-spacing: 0.5px;
     color: var(--cine-muted);
 }
+.cine-rec-item { margin-bottom: 1.1rem; }
+.cine-rec-item .cine-rec-quote { margin-bottom: 0.5rem; }
+.cine-rec-view {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    color: var(--cine-green);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.cine-rec-view:hover { color: var(--cine-cyan); text-decoration: underline; }
+
+/* Lightbox */
+.cine-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 4vw;
+    background: rgba(5, 6, 10, 0.45);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+.cine-lightbox.open { display: flex; }
+.cine-lightbox-figure {
+    max-width: 920px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+}
+.cine-lightbox-img {
+    max-width: 100%;
+    max-height: 82vh;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid var(--cine-line);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    background: #fff;
+}
+.cine-lightbox-cap {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+    color: var(--cine-muted);
+    text-align: center;
+}
+.cine-lightbox-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--cine-text);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--cine-line);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+.cine-lightbox-close:hover { background: rgba(255, 255, 255, 0.16); }
 
 /* ---------- Education ---------- */
 .cine-edu-grid {

@@ -14,7 +14,7 @@
     <meta property="og:description" content="8+ years building mission-critical SaaS systems. MBA in Data-Driven Business Intelligence & Strategic Leadership.">
 
     <title>Arish Ballana - Backend Engineer & Tech Leader</title>
-    <link rel="stylesheet" href="cinematic.css?v=10">
+    <link rel="stylesheet" href="cinematic.css?v=15">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@
     <!-- Hero -->
     <section id="about" class="cine-hero">
         <div class="avatar-bleed" aria-hidden="true">
-            <video class="avatar-video" autoplay muted loop playsinline poster="/images/profile.jpg">
+            <video class="avatar-video" autoplay muted loop playsinline preload="auto">
                 <source src="/images/avatar.webm" type="video/webm">
                 <source src="/images/avatar.mp4" type="video/mp4">
             </video>
@@ -130,8 +130,14 @@
 
                     <div class="cine-recognition">
                         <p class="cine-rec-label">★ Recognition · "Results-Driven"</p>
-                        <p class="cine-rec-quote">"Outstanding work and successful deliveries across the NRT Cheque initiative — the commitment, collaboration, and technical excellence truly made a difference. Delivering near real-time capabilities that strengthen fraud prevention is a big achievement, directly improving detection speed and protecting our customers and the bank."</p>
-                        <p class="cine-rec-quote">"Outstanding support and commitment in wrapping up critical deliverables — a strong focus on results, proactive collaboration, and a results-oriented mindset. Reliability and ownership are truly appreciated."</p>
+                        <div class="cine-rec-item">
+                            <p class="cine-rec-quote">"Outstanding work and successful deliveries across the NRT Cheque initiative — the commitment, collaboration, and technical excellence truly made a difference. Delivering near real-time capabilities that strengthen fraud prevention is a big achievement, directly improving detection speed and protecting our customers and the bank."</p>
+                            <button type="button" class="cine-rec-view" data-img="/images/recognition-nrtcheque.png" data-caption="NRT Cheque project recognition · Scotiabank · Apr 2026">⤢ View recognition</button>
+                        </div>
+                        <div class="cine-rec-item">
+                            <p class="cine-rec-quote">"Outstanding support and commitment in wrapping up critical deliverables — a strong focus on results, proactive collaboration, and a results-oriented mindset. Reliability and ownership are truly appreciated."</p>
+                            <button type="button" class="cine-rec-view" data-img="/images/recognition-kudos.png" data-caption="Kudos recognition · Scotiabank · Jun 2026">⤢ View recognition</button>
+                        </div>
                         <p class="cine-rec-attrib">— Scotiabank internal recognition, 2026</p>
                     </div>
                 </div>
@@ -146,7 +152,59 @@
                         <span class="cine-exp-tag">2023–2024</span>
                     </div>
                     <p class="cine-exp-role">SENIOR SOFTWARE ENGINEER &amp; SCRUM MASTER</p>
-                    <p class="cine-exp-desc">Enhanced Application Performance Monitoring (APM) product delivered as SaaS. Integrated AI-powered anomaly detection and advanced root cause analysis using graph traversal algorithms. Contributed to winning India's largest public-sector bank as customer.</p>
+                    <p class="cine-exp-desc">On the Java Agent Team at Cisco AppDynamics, enhanced an Application Performance Monitoring (APM) product delivered as SaaS—combining software engineering, AI-driven monitoring, and solution design to help global clients optimize performance, reliability, and customer experience.</p>
+
+                    <div class="cine-exp-detail">
+                        <div class="cine-exp-detail-text">
+                            <p class="cine-exp-subhead">Key Contributions &amp; Responsibilities</p>
+                            <ul class="cine-exp-points">
+                                <li><strong>AI-powered anomaly detection:</strong> Contributed to features that automatically identify abnormal behaviour in business transactions and application metrics—alerting customers proactively before service degradation.</li>
+                                <li><strong>Advanced root cause analysis:</strong> Built graph-traversal algorithms analyzing slow code execution, database queries, and remote service calls—helping enterprises resolve issues faster.</li>
+                                <li><strong>Strengthened SaaS delivery:</strong> Partnered with product managers, architects, and vendors to improve delivery models, integration patterns, and enterprise-scale client onboarding.</li>
+                                <li><strong>Startup-style innovation:</strong> Supported innovation pods piloting AI + SaaS prototypes, later scaled into enterprise-grade offerings.</li>
+                            </ul>
+                        </div>
+                        <div class="cine-exp-detail-media">
+                            <div class="apm-mock" role="img" aria-label="AppDynamics Business Network dashboard">
+                                <div class="apm-top">Business Network</div>
+                                <div class="apm-rings">
+                                    <span class="apm-ring warn"></span>
+                                    <span class="apm-ring ok"></span>
+                                    <span class="apm-ring ok"></span>
+                                    <span class="apm-ring ok"></span>
+                                    <span class="apm-ring ok"></span>
+                                    <span class="apm-ring ok"></span>
+                                </div>
+                                <div class="apm-grid">
+                                    <div class="apm-card">
+                                        <div class="apm-lbl"><span>Network Errors</span></div>
+                                        <svg viewBox="0 0 120 32" preserveAspectRatio="none"><polyline points="0,24 15,22 30,25 45,18 60,21 75,14 90,17 105,12 120,15"/></svg>
+                                    </div>
+                                    <div class="apm-card">
+                                        <div class="apm-lbl"><span>Work Used</span><b>60.1%</b></div>
+                                        <svg viewBox="0 0 120 32" preserveAspectRatio="none"><polyline points="0,20 15,18 30,19 45,16 60,17 75,15 90,16 105,14 120,15"/></svg>
+                                    </div>
+                                    <div class="apm-card">
+                                        <div class="apm-lbl"><span>Requests Time</span><b>2,237ms</b></div>
+                                        <svg viewBox="0 0 120 32" preserveAspectRatio="none" class="violet"><polyline points="0,22 12,14 24,21 36,10 48,18 60,12 72,22 84,13 96,19 108,11 120,17"/></svg>
+                                    </div>
+                                    <div class="apm-card">
+                                        <div class="apm-lbl"><span>Requests Count</span><b>6,456</b></div>
+                                        <svg viewBox="0 0 120 32" preserveAspectRatio="none" class="violet bars"><rect x="0" y="18" width="5" height="14"/><rect x="10" y="10" width="5" height="22"/><rect x="20" y="14" width="5" height="18"/><rect x="30" y="6" width="5" height="26"/><rect x="40" y="12" width="5" height="20"/><rect x="50" y="16" width="5" height="16"/><rect x="60" y="8" width="5" height="24"/><rect x="70" y="13" width="5" height="19"/><rect x="80" y="5" width="5" height="27"/><rect x="90" y="11" width="5" height="21"/><rect x="100" y="15" width="5" height="17"/><rect x="110" y="9" width="5" height="23"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cine-recognition">
+                        <p class="cine-rec-label">★ Recognition · "Getting to the Finish Line"</p>
+                        <div class="cine-rec-item">
+                            <p class="cine-rec-quote">"Thank you for solving problems related to the Analytics agent that helped us secure the SBI account. SBI was reporting issues that weren't reproducing in our environment — you kept chasing the customer until we got access to their environment to reproduce the issue (at very high scale, in a specific setup), which you then resolved. Thank you for your perseverance and customer obsession — this helped us secure the deal with SBI."</p>
+                            <button type="button" class="cine-rec-view" data-img="/images/recognition-cisco-sbi.jpg" data-caption="Cisco Connected Recognition · Getting to the Finish Line · Mar 2024">⤢ View recognition</button>
+                        </div>
+                        <p class="cine-rec-attrib">— Cisco Connected Recognition · March 2024</p>
+                    </div>
                 </div>
 
                 <!-- Informatica -->
@@ -159,7 +217,12 @@
                         <span class="cine-exp-tag">2022–2023</span>
                     </div>
                     <p class="cine-exp-role">SENIOR SOFTWARE ENGINEER</p>
-                    <p class="cine-exp-desc">Contributed to Informatica's Cloud Data Governance and Catalog (CDGC) platform. Led migration of the Enterprise Data Catalog Service to a cloud-native architecture, pushing collected metadata to the Hawk Ecosystem and surfacing it to consumers via Elasticsearch and Graph-based UI.</p>
+                    <p class="cine-exp-desc">Worked on Informatica's Cloud Data Governance and Catalog (CDGC) platform, helping enterprises discover, govern, and understand their data assets through a modern, cloud-native catalog.</p>
+                    <p class="cine-exp-subhead">Key Contributions</p>
+                    <ul class="cine-exp-points">
+                        <li><strong>Cloud-native catalog migration:</strong> Contributed to migrating Informatica's Enterprise Data Catalog service to a cloud-native Data Catalog architecture, improving scalability and maintainability.</li>
+                        <li><strong>Metadata pipeline &amp; discovery:</strong> Pushed collected metadata into the Hawk ecosystem and surfaced it to consumers through an Elasticsearch- and graph-backed UI, enabling faster data discovery across the enterprise.</li>
+                    </ul>
                 </div>
 
                 <!-- HP -->
@@ -306,6 +369,15 @@
         </div>
     </footer>
 
-    <script src="cinematic.js?v=2"></script>
+    <!-- Lightbox overlay for recognition screenshots -->
+    <div class="cine-lightbox" id="cine-lightbox" aria-hidden="true">
+        <button type="button" class="cine-lightbox-close" aria-label="Close">×</button>
+        <figure class="cine-lightbox-figure">
+            <img src="" alt="Recognition screenshot" class="cine-lightbox-img">
+            <figcaption class="cine-lightbox-cap"></figcaption>
+        </figure>
+    </div>
+
+    <script src="cinematic.js?v=4"></script>
 </body>
 </html>

@@ -28,6 +28,58 @@
     });
 })();
 
+// --- Avatar: fade the video in only when it can actually play ---
+// The photo sits underneath as the default/fallback; the video starts hidden
+// and cross-fades in once ready, so it never flashes photo -> avatar frame.
+(function () {
+    var v = document.querySelector('.avatar-video');
+    if (!v) return;
+    var revealed = false;
+    function reveal() {
+        if (revealed) return;
+        revealed = true;
+        v.classList.add('is-ready');
+    }
+    // readyState >= 3 (HAVE_FUTURE_DATA) means a frame is ready to show.
+    if (v.readyState >= 3) reveal();
+    v.addEventListener('playing', reveal);
+    v.addEventListener('canplay', reveal);
+})();
+
+// --- Recognition lightbox ---
+(function () {
+    var lb = document.getElementById('cine-lightbox');
+    if (!lb) return;
+    var img = lb.querySelector('.cine-lightbox-img');
+    var cap = lb.querySelector('.cine-lightbox-cap');
+
+    function open(src, caption) {
+        img.src = src;
+        cap.textContent = caption || '';
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+    function close() {
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden', 'true');
+        img.src = '';
+        document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.cine-rec-view').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            open(btn.getAttribute('data-img'), btn.getAttribute('data-caption'));
+        });
+    });
+    lb.addEventListener('click', function (e) {
+        if (e.target === lb || e.target.classList.contains('cine-lightbox-close')) close();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && lb.classList.contains('open')) close();
+    });
+})();
+
 // --- Starfield background ---
 (function () {
     const canvas = document.getElementById('star-canvas');
