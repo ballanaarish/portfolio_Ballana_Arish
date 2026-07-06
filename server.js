@@ -67,15 +67,26 @@ const isDev = process.env.NODE_ENV !== 'production';
 app.use(express.static(path.join(__dirname, 'public'), {
     maxAge: isDev ? 0 : '1d',
     etag: !isDev,
+    index: false,
 }));
+
+// Which HTML file the site serves at "/".
+// Switch the entire site back to the classic design by changing this to
+// 'network.html' (the classic design also stays available at /network).
+const MAIN_PAGE = 'cinematic.html';
 
 // ===================================
 // ROUTES
 // ===================================
 
-// Home page
+// Home page (current design)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', MAIN_PAGE));
+});
+
+// Classic design, kept as a backup
+app.get('/network', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'network.html'));
 });
 
 // Health check endpoint
@@ -85,7 +96,7 @@ app.get('/health', (req, res) => {
 
 // Catch-all for 404
 app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.status(404).sendFile(path.join(__dirname, 'public', MAIN_PAGE));
 });
 
 // ===================================
