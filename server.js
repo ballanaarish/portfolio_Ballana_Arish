@@ -62,6 +62,28 @@ app.use(compression());
 // STATIC FILES SERVING
 // ===================================
 
+// ===================================
+// SITE CONFIG (deploy-time configurable via env vars)
+// ===================================
+
+// Which HTML file the live site serves at "/". Override at deploy time with
+// the MAIN_PAGE env var — e.g. set MAIN_PAGE=network.html to switch the whole
+// site back to the classic design.
+const MAIN_PAGE = process.env.MAIN_PAGE || 'cinematic.html';
+
+// Whether the classic design is reachable at /network. Off by default so only
+// the main site is accessible; set EXPOSE_NETWORK=true to enable it.
+const EXPOSE_NETWORK = process.env.EXPOSE_NETWORK === 'true';
+
+// Gate: block direct access to raw .html files and to /network (unless
+// explicitly exposed) so the site is only reachable through the routes below.
+app.use((req, res, next) => {
+    const p = req.path.toLowerCase();
+    if (p.endsWith('.html')) return res.redirect(302, '/');
+    if (p === '/network' && !EXPOSE_NETWORK) return res.redirect(302, '/');
+    next();
+});
+
 // Serve static files — no caching in dev, 1d in production
 const isDev = process.env.NODE_ENV !== 'production';
 app.use(express.static(path.join(__dirname, 'public'), {
@@ -70,22 +92,18 @@ app.use(express.static(path.join(__dirname, 'public'), {
     index: false,
 }));
 
-// Which HTML file the site serves at "/".
-// Switch the entire site back to the classic design by changing this to
-// 'network.html' (the classic design also stays available at /network).
-const MAIN_PAGE = 'cinematic.html';
-
 // ===================================
 // ROUTES
 // ===================================
 
-// Home page (current design)
+// Home page — the live main site
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', MAIN_PAGE));
 });
 
-// Classic design, kept as a backup
+// Classic design — reachable only when EXPOSE_NETWORK=true
 app.get('/network', (req, res) => {
+    if (!EXPOSE_NETWORK) return res.redirect(302, '/');
     res.sendFile(path.join(__dirname, 'public', 'network.html'));
 });
 
