@@ -70,7 +70,7 @@ body.cine {
 
 .cine-menu {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.2rem;
     align-items: center;
 }
 .cine-menu a {
@@ -942,6 +942,62 @@ body.cine {
     color: var(--cine-muted);
 }
 
+/* ---------- Testimonials / Recognition ---------- */
+.cine-testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.25rem;
+}
+.cine-testimonial {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--cine-line);
+    border-radius: 14px;
+    padding: 1.75rem;
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.cine-testimonial:hover {
+    border-color: rgba(53, 201, 214, 0.4);
+    box-shadow: 0 0 26px rgba(53, 201, 214, 0.10);
+    transform: translateY(-3px);
+}
+.cine-quote-mark {
+    font-family: var(--font-heavy);
+    font-size: 3rem;
+    line-height: 0.5;
+    color: rgba(53, 201, 214, 0.55);
+    margin-bottom: 0.75rem;
+}
+.cine-testimonial blockquote {
+    flex: 1;
+    margin: 0 0 1.25rem;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    font-style: italic;
+    color: var(--cine-text);
+}
+.cine-testimonial figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin-bottom: 1rem;
+}
+.cine-testimonial-src {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--cine-text);
+}
+.cine-testimonial-meta {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    color: var(--cine-muted);
+}
+.cine-testimonial .cine-rec-view { align-self: flex-start; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
     .avatar-bleed {
@@ -970,8 +1026,10 @@ body.cine {
 
     .cine-section { padding: 4rem 0; }
     .cine-container { padding: 0 1.5rem; }
+}
 
-    /* Nav → hamburger dropdown */
+/* Nav collapses to the hamburger earlier — 8 links need horizontal room */
+@media (max-width: 1024px) {
     .cine-burger { display: flex; }
     .cine-menu {
         display: none;

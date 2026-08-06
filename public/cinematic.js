@@ -24,7 +24,7 @@
         a.addEventListener('click', close);
     });
     window.addEventListener('resize', function () {
-        if (window.innerWidth > 860) close();
+        if (window.innerWidth > 1024) close();
     });
 })();
 
