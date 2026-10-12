@@ -210,6 +210,7 @@ body.cine {
 .cine-cta {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
     margin-top: 2.5rem;
 }
@@ -419,6 +420,41 @@ body.cine {
     background: rgba(255, 255, 255, 0.05);
     border-left-color: var(--cine-green);
 }
+.cine-exp-item[open] {
+    background: rgba(255, 255, 255, 0.045);
+    border-left-color: var(--cine-green);
+}
+
+/* Collapsible summary (collapsed = clean header row + chevron) */
+.cine-exp-summary {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    padding-right: 2rem;
+    list-style: none;
+    outline: none;
+}
+.cine-exp-summary::-webkit-details-marker { display: none; }
+.cine-exp-summary .cine-exp-head { margin-bottom: 0.7rem; }
+.cine-exp-summary .cine-exp-role { margin-bottom: 0; }
+.cine-exp-summary::after {
+    content: "";
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--cine-muted);
+    border-bottom: 2px solid var(--cine-muted);
+    transform: translateY(-65%) rotate(45deg);
+    transition: transform 0.25s ease, border-color 0.2s ease;
+}
+.cine-exp-summary:hover::after,
+.cine-exp-item[open] > .cine-exp-summary::after { border-color: var(--cine-cyan); }
+.cine-exp-item[open] > .cine-exp-summary::after {
+    transform: translateY(-35%) rotate(-135deg);
+}
+.cine-exp-item[open] > .cine-exp-summary { margin-bottom: 1.1rem; }
 .cine-exp-head {
     display: flex;
     justify-content: space-between;
@@ -769,6 +805,85 @@ body.cine {
 }
 .cine-lightbox-close:hover { background: rgba(255, 255, 255, 0.16); }
 
+/* ---------- Projects ---------- */
+.cine-project {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--cine-line);
+    border-radius: 16px;
+    padding: 1.75rem;
+}
+.cine-project-media img {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--cine-line);
+}
+.cine-project-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--cine-cyan);
+}
+.cine-project-body h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--cine-text);
+    margin: 0.55rem 0 0.75rem;
+}
+.cine-project-body p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--cine-muted);
+    margin-bottom: 1.5rem;
+}
+.cine-project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.cine-github {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+    padding: 1.4rem 1.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--cine-line);
+    border-radius: 14px;
+    text-decoration: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.cine-github:hover {
+    border-color: rgba(53, 201, 214, 0.45);
+    box-shadow: 0 0 26px rgba(53, 201, 214, 0.10);
+    transform: translateY(-2px);
+}
+.cine-github-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cine-text);
+}
+.cine-github-icon svg { width: 30px; height: 30px; }
+.cine-github-text { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
+.cine-github-text strong { font-size: 1rem; font-weight: 600; color: var(--cine-text); }
+.cine-github-text span { font-size: 0.85rem; color: var(--cine-muted); }
+.cine-github-cta {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--cine-cyan);
+    white-space: nowrap;
+}
+
 /* ---------- Education ---------- */
 .cine-edu-grid {
     display: grid;
@@ -1023,6 +1138,10 @@ body.cine {
     .cine-edu-grid,
     .cine-cert-grid { grid-template-columns: 1fr; }
     .cine-stat-desc { max-width: none; }
+
+    .cine-project { grid-template-columns: 1fr; }
+    .cine-project-media { max-width: 260px; }
+    .cine-github { flex-direction: column; align-items: flex-start; }
 
     .cine-section { padding: 4rem 0; }
     .cine-container { padding: 0 1.5rem; }

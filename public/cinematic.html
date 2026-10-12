@@ -18,7 +18,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="stylesheet" href="cinematic.css?v=23">
+    <link rel="stylesheet" href="cinematic.css?v=25">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -33,8 +33,6 @@
             <span></span><span></span><span></span>
         </button>
         <div class="cine-menu">
-            <a href="#about">ABOUT</a>
-            <a href="#achievements">ACHIEVEMENTS</a>
             <a href="#expertise">EXPERTISE</a>
             <a href="#experience">EXPERIENCE</a>
             <a href="#education">EDUCATION</a>
@@ -69,7 +67,7 @@
                 </div>
 
                 <div class="cine-cta">
-                    <a class="cine-btn-primary" href="#experience">VIEW PROJECTS</a>
+                    <a class="cine-btn-primary" href="#projects">VIEW PROJECTS</a>
                     <a class="cine-btn-ghost" href="https://www.linkedin.com/in/arish-ballana" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a>
                 </div>
             </div>
@@ -101,6 +99,29 @@
                     <div class="cine-stat-num">&lt;1s</div>
                     <div class="cine-stat-label">Fraud Scoring Latency</div>
                     <p class="cine-stat-desc">Sub-second risk decisions on cheque deposits across Mobile, ABM &amp; Branch at Scotiabank</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="cine-section">
+        <div class="cine-container">
+            <span class="cine-eyebrow">FEATURED WORK</span>
+            <h2 class="cine-title">Projects</h2>
+
+            <div class="cine-project">
+                <div class="cine-project-media">
+                    <img src="/images/rbse-cover.jpg" alt="Reflected Best Self report cover — Michigan Ross" loading="lazy">
+                </div>
+                <div class="cine-project-body">
+                    <span class="cine-project-tag">Reflected Best Self Exercise™ · Michigan Ross (University of Michigan)</span>
+                    <h3>My Leadership Style Study</h3>
+                    <p>A structured leadership self-study built on the Reflected Best Self Exercise — a framework from Michigan Ross's Center for Positive Organizations. Colleagues, mentors, and managers contributed first-hand stories of when I was at my best; I synthesized their feedback with my own experiences into a reflective analysis of my leadership style, completed for BU628: Leadership in my MBA.</p>
+                    <div class="cine-project-links">
+                        <a class="cine-btn-primary" href="/projects/reflected-best-self-report.pdf" target="_blank" rel="noopener noreferrer">VIEW TESTIMONIALS ↗</a>
+                        <a class="cine-btn-ghost" href="/projects/leadership-style-analysis.pdf" target="_blank" rel="noopener noreferrer">VIEW REPORT ↗</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -167,7 +188,8 @@
 
             <div class="cine-exp-list">
                 <!-- Scotiabank -->
-                <div class="cine-exp-item">
+                <details class="cine-exp-item">
+                    <summary class="cine-exp-summary">
                     <div class="cine-exp-head">
                         <div class="cine-exp-company">
                             <img src="/images/logos/scotiabank.png" alt="Scotiabank" class="cine-exp-logo" width="120" height="40" style="max-width:120px">
@@ -175,6 +197,7 @@
                         <span class="cine-exp-tag cine-current">CURRENT ROLE</span>
                     </div>
                     <p class="cine-exp-role">SENIOR DEVELOPER, FRAUD SERVICE LAYER LAB</p>
+                    </summary>
                     <p class="cine-exp-desc">At Scotiabank's Fraud Service Layer Lab, I'm leading the design and implementation of NRTCHQ — a real-time fraud detection platform processing cheque deposits across Mobile, ATM, and Branch channels. The system identifies suspicious patterns in seconds, preventing fraud at source while maintaining seamless customer experience. I'm driving cross-functional collaboration between fraud analysts, product teams, and infrastructure engineers to translate complex risk requirements into scalable technical solutions.</p>
 
                     <div class="cine-exp-detail">
@@ -203,10 +226,11 @@
                         </div>
                         <p class="cine-rec-attrib">— Scotiabank internal recognition, 2026</p>
                     </div>
-                </div>
+                </details>
 
                 <!-- Cisco AppDynamics -->
-                <div class="cine-exp-item">
+                <details class="cine-exp-item">
+                    <summary class="cine-exp-summary">
                     <div class="cine-exp-head">
                         <div class="cine-exp-company">
                             <img src="/images/logos/cisco.png" alt="Cisco" class="cine-exp-logo" width="40" height="40">
@@ -215,6 +239,7 @@
                         <span class="cine-exp-tag">2023–2024</span>
                     </div>
                     <p class="cine-exp-role">SENIOR SOFTWARE ENGINEER &amp; SCRUM MASTER</p>
+                    </summary>
                     <p class="cine-exp-desc">On the Java Agent Team at Cisco AppDynamics, enhanced an Application Performance Monitoring (APM) product delivered as SaaS—combining software engineering, AI-driven monitoring, and solution design to help global clients optimize performance, reliability, and customer experience.</p>
 
                     <div class="cine-exp-detail">
@@ -268,10 +293,11 @@
                         </div>
                         <p class="cine-rec-attrib">— Cisco Connected Recognition · March 2024</p>
                     </div>
-                </div>
+                </details>
 
                 <!-- Informatica -->
-                <div class="cine-exp-item">
+                <details class="cine-exp-item">
+                    <summary class="cine-exp-summary">
                     <div class="cine-exp-head">
                         <div class="cine-exp-company">
                             <img src="/images/logos/informatica.png" alt="Informatica" class="cine-exp-logo" width="40" height="40">
@@ -280,25 +306,28 @@
                         <span class="cine-exp-tag">2022–2023</span>
                     </div>
                     <p class="cine-exp-role">SENIOR SOFTWARE ENGINEER</p>
+                    </summary>
                     <p class="cine-exp-desc">Worked on Informatica's Cloud Data Governance and Catalog (CDGC) platform, helping enterprises discover, govern, and understand their data assets through a modern, cloud-native catalog.</p>
                     <p class="cine-exp-subhead">Key Contributions</p>
                     <ul class="cine-exp-points">
                         <li><strong>Cloud-native catalog migration:</strong> Contributed to migrating Informatica's Enterprise Data Catalog service to a cloud-native Data Catalog architecture, improving scalability and maintainability.</li>
                         <li><strong>Metadata pipeline &amp; discovery:</strong> Pushed collected metadata into the Hawk ecosystem and surfaced it to consumers through an Elasticsearch- and graph-backed UI, enabling faster data discovery across the enterprise.</li>
                     </ul>
-                </div>
+                </details>
 
                 <!-- HP -->
-                <div class="cine-exp-item">
+                <details class="cine-exp-item">
+                    <summary class="cine-exp-summary">
                     <div class="cine-exp-head">
                         <div class="cine-exp-company">
                             <img src="/images/logos/hp.png" alt="HP" class="cine-exp-logo" width="40" height="40">
-                            <h3>HP Innovation</h3>
+                            <h3>HP</h3>
                         </div>
                         <span class="cine-exp-tag">2019–2022</span>
                     </div>
-                    <p class="cine-exp-role">R&amp;D ENGINEERING · INTERN → SENIOR</p>
-                    <p class="cine-exp-desc">Five years across HP's innovation org—progressing from intern to senior R&amp;D engineer while building enterprise SaaS &amp; IoT platforms from the ground up.</p>
+                    <p class="cine-exp-role">R&amp;D ENGINEERING · ENGINEER → SENIOR</p>
+                    </summary>
+                    <p class="cine-exp-desc">Nearly three years across HP's innovation org—advancing from R&amp;D software engineer to senior R&amp;D engineer while building enterprise SaaS &amp; IoT platforms from the ground up.</p>
 
                     <ol class="cine-timeline">
                         <li class="cine-tl-item">
@@ -336,18 +365,12 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="cine-tl-item">
-                            <span class="cine-tl-node">3</span>
-                            <div class="cine-tl-body">
-                                <p class="cine-tl-title">R&amp;D Intern <span class="cine-tl-date">Feb 2017 – Aug 2017</span></p>
-                                <p class="cine-tl-desc">Founded and developed Newton (Print Analytics Platformization) from scratch—HP's enterprise-wide Data Analytics and Business Intelligence solution. Built end-to-end data pipelines in Scala using Apache Spark.</p>
-                            </div>
-                        </li>
                     </ol>
-                </div>
+                </details>
 
                 <!-- Vital Labs -->
-                <div class="cine-exp-item">
+                <details class="cine-exp-item">
+                    <summary class="cine-exp-summary">
                     <div class="cine-exp-head">
                         <div class="cine-exp-company">
                             <img src="/images/logos/nimesa.png" alt="Nimesa" class="cine-exp-logo" width="40" height="40">
@@ -356,6 +379,7 @@
                         <span class="cine-exp-tag">2017–2019</span>
                     </div>
                     <p class="cine-exp-role">RESEARCH &amp; DEVELOPMENT ENGINEER</p>
+                    </summary>
                     <p class="cine-exp-desc">Joined a 5-member startup building <a href="https://www.linkedin.com/company/nimesainc/about/" target="_blank" rel="noopener noreferrer" class="cine-inline-link">Nimesa</a>, a cloud-native SaaS product for data protection, backup, and disaster recovery. Worked end-to-end on product features from scratch.</p>
 
                     <div class="cine-exp-detail">
@@ -371,7 +395,7 @@
                             <img src="/images/nimesa-cloud.jpg" alt="Nimesa — Cloud Recovery in a Blink" loading="lazy">
                         </div>
                     </div>
-                </div>
+                </details>
             </div>
         </div>
     </section>
