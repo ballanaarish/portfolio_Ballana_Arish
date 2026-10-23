@@ -3,8 +3,8 @@
    =================================== */
 
 :root {
-    --cine-bg: #05060a;
-    --cine-bg-2: #0a0d16;
+    --cine-bg: #14141d;
+    --cine-bg-2: #1b1b27;
     --cine-text: #eef1f7;
     --cine-muted: #8b93a7;
     --cine-green: #38e08a;
@@ -25,8 +25,10 @@ html {
 
 body.cine {
     background:
-        radial-gradient(1000px 640px at 80% 12%, rgba(32, 40, 62, 0.55) 0%, transparent 60%),
-        linear-gradient(180deg, #05060a 0%, #0a0d16 60%, #070912 100%);
+        radial-gradient(55% 40% at 20% 6%,  rgba(84, 120, 134, 0.50) 0%, rgba(84, 120, 134, 0) 60%),
+        radial-gradient(55% 46% at 84% 10%, rgba(85, 78, 123, 0.48) 0%, rgba(85, 78, 123, 0) 62%),
+        radial-gradient(80% 55% at 50% 112%, rgba(85, 78, 123, 0.26) 0%, rgba(85, 78, 123, 0) 60%),
+        linear-gradient(120deg, #14141d 0%, #1b1b27 100%);
     background-attachment: fixed;
     color: var(--cine-text);
     font-family: var(--font-body);

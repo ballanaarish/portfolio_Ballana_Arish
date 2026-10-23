@@ -80,84 +80,114 @@
     });
 })();
 
-// --- Starfield background ---
+// --- Star-dust background (WebGL shader: dense fine animated dust over the
+//     indigo base + glows, cleared through the centre for legibility) ---
 (function () {
     const canvas = document.getElementById('star-canvas');
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false, antialias: false });
+    if (!gl) return;  // graceful fallback: the CSS indigo + glows still show
+
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let W, H, stars = [], raf = null;
+    let raf = null;
+
+    const VERT = 'attribute vec2 p; void main(){ gl_Position = vec4(p,0.0,1.0); }';
+    const FRAG = [
+        'precision highp float;',
+        'uniform vec2 iResolution;',
+        'uniform float iTime;',
+        'float hash21(vec2 p){ p = fract(p*vec2(123.34,345.45)); p += dot(p,p+34.345); return fract(p.x*p.y); }',
+        'float layer(vec2 uv, float scale, float seed, float thresh, float minSize, float maxSize, float t){',
+        '  vec2 gv = uv*scale; gv.y -= t*0.5;',
+        '  vec2 id = floor(gv); vec2 f = fract(gv); float a = 0.0;',
+        '  for(int j=-1;j<=1;j++) for(int i=-1;i<=1;i++){',
+        '    vec2 off = vec2(float(i),float(j)); vec2 cell = id + off;',
+        '    float h = hash21(cell + seed);',
+        '    if(h < thresh) continue;',
+        '    vec2 pos = vec2(hash21(cell+seed+1.3), hash21(cell+seed+2.7));',
+        '    float bright = mix(0.10, 1.0, hash21(cell+seed+5.1));',
+        '    float size = mix(minSize, maxSize, hash21(cell+seed+7.9));',
+        '    float tw = 0.5 + 0.5*sin(iTime*(0.35+bright*1.1) + h*6.2831);',
+        '    float d = length(f - (pos + off));',
+        '    a += smoothstep(size, size*0.15, d) * bright * tw;',
+        '  }',
+        '  return a;',
+        '}',
+        'void main(){',
+        '  vec2 uv = gl_FragCoord.xy / iResolution.xy;',
+        '  float aspect = iResolution.x / iResolution.y;',
+        '  vec2 suv = vec2(uv.x*aspect, uv.y);',
+        '  float a = 0.0;',
+        '  a += layer(suv, 40.0,  0.0, 0.34, 0.045, 0.090, iTime);',
+        '  a += layer(suv, 60.0, 19.0, 0.44, 0.035, 0.065, iTime)*0.85;',
+        '  a += layer(suv, 26.0, 71.0, 0.68, 0.055, 0.120, iTime)*0.8;',
+        '  float dy = abs(uv.y - 0.5);',
+        '  float vmask = 0.45 + 0.55*smoothstep(0.06, 0.5, dy);',
+        '  a = clamp(a, 0.0, 1.0) * vmask;',
+        '  gl_FragColor = vec4(vec3(1.0), a);',
+        '}'
+    ].join('\n');
+
+    function compile(type, src) {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+        return s;
+    }
+    const vs = compile(gl.VERTEX_SHADER, VERT);
+    const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) return;
+    const prog = gl.createProgram();
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error(gl.getProgramInfoLog(prog)); return; }
+    gl.useProgram(prog);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    const locp = gl.getAttribLocation(prog, 'p');
+    gl.enableVertexAttribArray(locp);
+    gl.vertexAttribPointer(locp, 2, gl.FLOAT, false, 0, 0);
+    const uRes = gl.getUniformLocation(prog, 'iResolution');
+    const uTime = gl.getUniformLocation(prog, 'iTime');
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
     function resize() {
-        W = canvas.offsetWidth;
-        H = canvas.offsetHeight;
-        canvas.width = W * devicePixelRatio;
-        canvas.height = H * devicePixelRatio;
-        ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-        initStars();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(canvas.clientWidth * dpr);
+        canvas.height = Math.floor(canvas.clientHeight * dpr);
+        gl.viewport(0, 0, canvas.width, canvas.height);
     }
 
-    function initStars() {
-        const count = Math.min(Math.floor((W * H) / 6500), 260);
-        stars = Array.from({ length: count }, () => ({
-            x: Math.random() * W,
-            y: Math.random() * H,
-            r: Math.random() * 1.4 + 0.3,
-            a: Math.random() * 0.5 + 0.2,
-            tw: Math.random() * Math.PI * 2,
-            tws: Math.random() * 0.02 + 0.004,
-            vx: (Math.random() - 0.5) * 0.04,
-            vy: (Math.random() - 0.5) * 0.04,
-            warm: Math.random() > 0.85,
-        }));
+    const t0 = performance.now();
+    function render(time) {
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uTime, time);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
-
-    function paintStar(s, alpha) {
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = s.warm
-            ? `rgba(255,214,170,${alpha})`
-            : `rgba(255,255,255,${alpha})`;
-        ctx.fill();
+    function loop() {
+        render((performance.now() - t0) / 1000);
+        raf = requestAnimationFrame(loop);
     }
-
-    function draw() {
-        ctx.clearRect(0, 0, W, H);
-        for (const s of stars) {
-            s.tw += s.tws;
-            s.x += s.vx;
-            s.y += s.vy;
-            if (s.x < 0) s.x = W;
-            if (s.x > W) s.x = 0;
-            if (s.y < 0) s.y = H;
-            if (s.y > H) s.y = 0;
-            paintStar(s, Math.max(0, s.a + Math.sin(s.tw) * 0.18));
-        }
-        raf = requestAnimationFrame(draw);
-    }
-
-    function drawStatic() {
-        ctx.clearRect(0, 0, W, H);
-        for (const s of stars) paintStar(s, s.a);
-    }
-
     function start() {
         resize();
-        if (prefersReduced) drawStatic();
-        else draw();
+        if (prefersReduced) render(0);
+        else loop();
     }
 
     window.addEventListener('resize', () => {
-        cancelAnimationFrame(raf);
+        cancelAnimationFrame(raf); raf = null;
         resize();
-        if (prefersReduced) drawStatic();
-        else draw();
+        if (prefersReduced) render(0);
+        else loop();
     });
 
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
-        else if (!raf && !prefersReduced) draw();
+        else if (!raf && !prefersReduced) loop();
     });
 
     if (document.readyState === 'loading') {
