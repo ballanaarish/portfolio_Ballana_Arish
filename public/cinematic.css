@@ -169,23 +169,19 @@ body.cine {
     text-shadow: 0 0 60px rgba(255, 255, 255, 0.08);
 }
 
-.cine-role {
+.cine-creds {
     font-family: var(--font-mono);
-    font-size: clamp(0.8rem, 1.4vw, 1rem);
-    letter-spacing: 3px;
-    color: var(--cine-cyan);
+    font-size: clamp(0.78rem, 1.3vw, 0.98rem);
+    letter-spacing: 2.5px;
+    color: var(--cine-text);
     margin-top: 1rem;
     text-transform: uppercase;
 }
-.cine-role-from { color: var(--cine-muted); }
-.cine-role-to { color: var(--cine-text); }
-.cine-arrow {
-    display: inline-block;
-    color: var(--cine-green);
-    margin: 0 0.15rem;
-    animation: nudge 1.8s ease-in-out infinite;
+.cine-creds span {
+    color: var(--cine-cyan);
+    margin: 0 0.4rem;
+    font-weight: 600;
 }
-@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
 
 .cine-tags {
     display: flex;
